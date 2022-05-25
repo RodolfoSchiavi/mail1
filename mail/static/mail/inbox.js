@@ -41,10 +41,10 @@ function load_mailbox(mailbox) {
   console.log(emails);
   emails.forEach(email => {
 
-    emails_data = document.createElement('div')
+    emails_data = document.createElement('p')
     emails_data.className = "box";
-    emails_data.innerHTML += email.sender  + "  ";
-    emails_data.innerHTML += email.subject + "  ";
+    emails_data.innerHTML += email.sender  + "&nbsp &nbsp &nbsp";
+    emails_data.innerHTML += email.subject + "&nbsp &nbsp &nbsp";
     emails_data.innerHTML += email.timestamp + "<br>";
     
     emailsview.appendChild(emails_data)
