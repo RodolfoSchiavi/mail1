@@ -32,8 +32,7 @@ function load_mailbox(mailbox) {
   // Show the mailbox name
   const emailsview = document.querySelector('#emails-view');
   emailsview.innerHTML = `<h3>${mailbox.charAt(0).toUpperCase() + mailbox.slice(1)}</h3>`;
-  //document.querySelector('#emails-view').innerHTML = `<h3>Received Emails</h3>`
-
+  
     
    fetch(`/emails/${mailbox}`)
   .then(response => response.json())
@@ -41,10 +40,16 @@ function load_mailbox(mailbox) {
       
   console.log(emails);
   emails.forEach(email => {
-  
-    emailsview.innerHTML += email.sender + "<br>";
-    emailsview.innerHTML += email.subject + "<br>";
-    emailsview.innerHTML += email.timestamp + "<br>";
+
+    emails_data = document.createElement('div')
+    emails_data.className = "box";
+    emails_data.innerHTML += email.sender  + "  ";
+    emails_data.innerHTML += email.subject + "  ";
+    emails_data.innerHTML += email.timestamp + "<br>";
+    
+    emailsview.appendChild(emails_data)
+
+    
 
   });
     
