@@ -41,6 +41,10 @@ function load_mailbox(mailbox) {
       
   console.log(emails);
   emails.forEach(email => {
+  
+    emailsview.innerHTML += email.sender + "<br>";
+    emailsview.innerHTML += email.subject + "<br>";
+    emailsview.innerHTML += email.timestamp + "<br>";
 
   });
     
