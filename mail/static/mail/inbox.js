@@ -41,13 +41,27 @@ function load_mailbox(mailbox) {
   console.log(emails);
   emails.forEach(email => {
 
-    emails_data = document.createElement('p')
+    emails_data = document.createElement('p');
+    const button_archived = document.createElement('button');
+    button_archived.innerHTML= 'Archive';
+    button_archived.className ='btn btn-primary'
     emails_data.className = "box";
     emails_data.innerHTML += email.sender  + "&nbsp &nbsp &nbsp";
     emails_data.innerHTML += email.subject + "&nbsp &nbsp &nbsp";
-    emails_data.innerHTML += email.timestamp + "<br>";
+    emails_data.innerHTML += email.timestamp +"&nbsp &nbsp &nbsp";
+    button_archived.addEventListener('click', () =>archive(email.id))
+    emails_data.appendChild(button_archived);
+    
     
     emailsview.appendChild(emails_data)
+
+      //No readed emails color
+      if (email.read === false) { 
+        emails_data.style.backgroundColor = "white";
+      }
+      else {
+        emails_data.style.backgroundColor = '#CDCDCD';
+      }
 
     
 
@@ -64,15 +78,17 @@ function load_mailbox(mailbox) {
 
 
 function sending_email(){
-  
-
+   
+  const recipients = document.querySelector('#compose-recipients').value;
+  const subject = document.querySelector('#compose-subject').value;
+  const body = document.querySelector('#compose-body').value;
 
   fetch('/emails', {
     method: 'POST',
     body: JSON.stringify({
-        recipients: 'trancer@email99.com',
-        subject: 'Meeting time',
-        body: 'How about we meet tomorrow at 3pm?'
+        recipients: recipients,
+        subject: subject,
+        body: body
     })
   })
   .then(response => response.json())
@@ -90,3 +106,18 @@ function sending_email(){
 
 
 }
+
+function archive(email_id){
+
+  alert(email_id);
+  
+  fetch(`/emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+        archived: true
+    })
+  })
+}//End archive function
+load_mailbox('inbox');
+window.location.reload();
+
