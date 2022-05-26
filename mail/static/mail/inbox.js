@@ -40,19 +40,20 @@ function load_mailbox(mailbox) {
       
   console.log(emails);
   emails.forEach(email => {
-
+    var archive;
     emails_data = document.createElement('p');
     const button_archived = document.createElement('button');
-    button_archived.innerHTML= 'Archive';
-    button_archived.className ='btn btn-primary'
+   
     emails_data.className = "box";
     emails_data.innerHTML += email.sender  + "&nbsp &nbsp &nbsp";
     emails_data.innerHTML += email.subject + "&nbsp &nbsp &nbsp";
     emails_data.innerHTML += email.timestamp +"&nbsp &nbsp &nbsp";
-    button_archived.addEventListener('click', () =>archive(email.id))
+    var label = archive_label(email.archived); 
+  
+    button_archived.innerHTML= `${label}`;
+    button_archived.className ='btn btn-primary';
+    button_archived.addEventListener('click', () => archive_emails(email.id, email.archived));
     emails_data.appendChild(button_archived);
-    
-    
     emailsview.appendChild(emails_data)
 
       //No readed emails color
@@ -107,17 +108,49 @@ function sending_email(){
 
 }
 
-function archive(email_id){
-
-  alert(email_id);
+function archive_emails(email_id, email_archived){
   
-  fetch(`/emails/${email_id}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-        archived: true
+var newValue = !email_archived;
+  
+  alert(`${email_id}  ${email_archived}`);
+
+    fetch(`/emails/${email_id}`, {
+      method: 'PUT',
+      body: JSON.stringify({
+          archived: newValue
+      })
     })
-  })
+ 
+   
+    load_mailbox('archive');
+    window.location.reload();
 }//End archive function
-load_mailbox('inbox');
-window.location.reload();
+
+  
+    
+
+function archive_label(email_archived){
+
+  if (email_archived === false){
+
+  
+    archive = 'Archive';
+    email_archived = true;
+
+  }
+
+  else{
+
+    
+    archive = 'Unarchive';
+    email_archived = false;
+  }
+  return archive ;
+
+
+
+
+} //Ends archive_label function
+
+
 
