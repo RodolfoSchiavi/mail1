@@ -14,6 +14,7 @@ function compose_email() {
 
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#emails-detail-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'block';
 
   // Clear out composition fields
@@ -26,6 +27,7 @@ function load_mailbox(mailbox) {
   
   // Show the mailbox and hide other views
   document.querySelector('#emails-view').style.display = 'block';
+  document.querySelector('#emails-detail-view').style.display = 'none';
   document.querySelector('#compose-view').style.display = 'none';
 
 
@@ -43,6 +45,7 @@ function load_mailbox(mailbox) {
     var archive;
     emails_data = document.createElement('p');
     const button_archived = document.createElement('button');
+    const button_detail = document.createElement('button');
    
     emails_data.className = "box";
     emails_data.innerHTML += email.sender  + "&nbsp &nbsp &nbsp";
@@ -53,6 +56,11 @@ function load_mailbox(mailbox) {
     button_archived.innerHTML= `${label}`;
     button_archived.className ='btn btn-primary';
     button_archived.addEventListener('click', () => archive_emails(email.id, email.archived));
+    
+    button_detail.innerHTML = 'View Email Detail'
+    button_detail.className ='btn btn-dark';
+    button_detail.addEventListener('click', () => email_detail(email.id));
+    emails_data.appendChild(button_detail);
     emails_data.appendChild(button_archived);
     emailsview.appendChild(emails_data)
 
@@ -151,6 +159,32 @@ function archive_label(email_archived){
 
 
 } //Ends archive_label function
+
+function email_detail(email_detail_id){
+
+  
+
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#emails-detail-view').style.display = 'block';
+  document.querySelector('#compose-view').style.display = 'none';
+
+
+  fetch(`/emails/${email_detail_id}`)
+  .then(response => response.json())
+  .then(email => {
+
+ 
+    document.querySelector('#detail-timestamp').innerHTML = ` ${ email.timestamp}`
+    document.querySelector('#detail-sender').innerHTML = ` ${ email.sender}`
+    document.querySelector('#detail-recipients').innerHTML = ` ${ email.recipients}`
+    document.querySelector('#detail-subject').innerHTML = ` ${ email.subject}`
+    document.querySelector('#detail-body').innerHTML = ` ${ email.body}`
+
+  }
+    );
+      
+
+}//Ends email detail function
 
 
 
