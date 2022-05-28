@@ -179,12 +179,32 @@ function email_detail(email_detail_id){
     document.querySelector('#detail-recipients').innerHTML = ` ${ email.recipients}`
     document.querySelector('#detail-subject').innerHTML = ` ${ email.subject}`
     document.querySelector('#detail-body').innerHTML = ` ${ email.body}`
-
+   
+    const reply_button_div = document.querySelector('#reply-button')
+    reply_button_div.addEventListener('click', () => reply_email(email.id , email.sender, email.subject, email.body));
+    
   }
     );
-      
+    
 
 }//Ends email detail function
+
+function reply_email(email_id, email_sender ,email_subject, email_body){
+  
+  alert(`${email_id} ${email_sender} ${email_subject} ${email_body}`);
+  
+  
+  // Show compose view and hide other views
+  document.querySelector('#emails-view').style.display = 'none';
+  document.querySelector('#emails-detail-view').style.display = 'none';
+  document.querySelector('#compose-view').style.display = 'block';
+
+  document.querySelector('#compose-recipients').setAttribute('value', email_sender); 
+  document.querySelector('#compose-subject').setAttribute('value', email_subject) ;
+  document.querySelector('#compose-body').innerHTML = email_body;
+
+  
+}//Ends reply email function
 
 
 
