@@ -1,12 +1,21 @@
+
 textarea {
     min-height: 400px;
 }
 
+.row-data{
+    background-image: linear-gradient(to right bottom, #ff0091, #ef38b4, #d856d1, #ba6de8, #9580f7, #a880f1, #b881ec, #c683e6, #f279c4, #ff7a9e, #ff887a, #fb9c5f);
+    margin: 5px;
+    border-radius: 25px;
+}
+
 .box{
 
-   border: 1px solid black;
+   border: 1px solid rgb(29, 2, 2);
    margin: 9px;
    padding: 5px;
+   font-weight: bold;
+   
 }
 
 .p-label{

@@ -42,28 +42,31 @@ function load_mailbox(mailbox) {
       
   console.log(emails);
   emails.forEach(email => {
-    var archive;
-    emails_data = document.createElement('p');
+    const row_data = document.createElement('div');
+    row_data.className= "row row-data"
+    emails_data = document.createElement('div');
     const button_archived = document.createElement('button');
     const button_detail = document.createElement('button');
    
-    emails_data.className = "box";
+    emails_data.className = "box col-7";
     emails_data.innerHTML += email.sender  + "&nbsp &nbsp &nbsp";
     emails_data.innerHTML += email.subject + "&nbsp &nbsp &nbsp";
-    emails_data.innerHTML += email.timestamp +"&nbsp &nbsp &nbsp";
+    emails_data.innerHTML += email.timestamp +"&nbsp";
     var label = archive_label(email.archived); 
   
     button_archived.innerHTML= `${label}`;
-    button_archived.className ='btn btn-primary';
+    button_archived.className ='btn btn-primary col-1';
     button_archived.addEventListener('click', () => archive_emails(email.id, email.archived));
     
     button_detail.innerHTML = 'View Email Detail'
-    button_detail.className ='btn btn-dark';
+    button_detail.className ='btn btn-dark col-3';
     button_detail.addEventListener('click', () => email_detail(email.id));
-    emails_data.appendChild(button_detail);
-    emails_data.appendChild(button_archived);
-    emailsview.appendChild(emails_data)
-
+    
+    row_data.appendChild(emails_data)
+    row_data.appendChild(button_archived);
+    row_data.appendChild(button_detail);
+    
+    emailsview.appendChild(row_data)
       //No readed emails color
       if (email.read === false) { 
         emails_data.style.backgroundColor = "white";
