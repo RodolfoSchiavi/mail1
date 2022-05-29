@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
   load_mailbox('inbox');
 });
 
+//##################################################################
+
+
+//###################################################################
+
 function compose_email() {
 
   // Show compose view and hide other views
@@ -22,6 +27,11 @@ function compose_email() {
   document.querySelector('#compose-subject').value = '';
   document.querySelector('#compose-body').value = '';
 }
+
+//####################################################################
+
+
+//######################################################################
 
 function load_mailbox(mailbox) {
   
@@ -86,7 +96,9 @@ function load_mailbox(mailbox) {
 
 }//End load_mailbox()
 
+//#################################################################
 
+//#################################################################
 
 
 function sending_email(){
@@ -117,13 +129,18 @@ function sending_email(){
 
 
 
-}
+}//Ends sending_email function
+
+
+//####################################################################
+
+//####################################################################
 
 function archive_emails(email_id, email_archived){
   
 var newValue = !email_archived;
   
-  alert(`${email_id}  ${email_archived}`);
+ 
 
     fetch(`/emails/${email_id}`, {
       method: 'PUT',
@@ -137,7 +154,10 @@ var newValue = !email_archived;
     window.location.reload();
 }//End archive function
 
-  
+ //#################################################################
+ 
+ //##################################################################
+
     
 
 function archive_label(email_archived){
@@ -163,7 +183,14 @@ function archive_label(email_archived){
 
 } //Ends archive_label function
 
+
+//############################################################
+
+//############################################################
+
 function email_detail(email_detail_id){
+
+  read_email(email_detail_id);
 
   
 
@@ -184,7 +211,7 @@ function email_detail(email_detail_id){
     document.querySelector('#detail-body').innerHTML = ` ${ email.body}`
    
     const reply_button_div = document.querySelector('#reply-button')
-    reply_button_div.addEventListener('click', () => reply_email(email.id , email.sender, email.subject, email.body));
+    reply_button_div.addEventListener('click', () => reply_email( email.sender, email.subject, email.body));
     
   }
     );
@@ -192,7 +219,11 @@ function email_detail(email_detail_id){
 
 }//Ends email detail function
 
-function reply_email(email_id, email_sender ,email_subject, email_body){
+//######################################################################
+
+//######################################################################
+
+function reply_email( email_sender ,email_subject, email_body){
   
  // alert(`${email_id} ${email_sender} ${email_subject} ${email_body}`);
   if(email_subject.includes('re:') || email_subject.includes('Re:')){
@@ -201,7 +232,7 @@ function reply_email(email_id, email_sender ,email_subject, email_body){
   }else{
 
     var email_subject_re = 'Re: ' + email_subject;
-    alert(email_subject_re);
+    
   }
   
   // Show compose view and hide other views
@@ -215,6 +246,19 @@ function reply_email(email_id, email_sender ,email_subject, email_body){
 
   
 }//Ends reply email function
+
+function read_email(email_id){
+
+
+  fetch(`/emails/${email_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+        read: true
+    })
+  });
+
+
+}
 
 
 
