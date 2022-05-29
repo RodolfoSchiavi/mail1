@@ -194,8 +194,15 @@ function email_detail(email_detail_id){
 
 function reply_email(email_id, email_sender ,email_subject, email_body){
   
-  alert(`${email_id} ${email_sender} ${email_subject} ${email_body}`);
+ // alert(`${email_id} ${email_sender} ${email_subject} ${email_body}`);
+  if(email_subject.includes('re:') || email_subject.includes('Re:')){
   
+
+  }else{
+
+    var email_subject_re = 'Re: ' + email_subject;
+    alert(email_subject_re);
+  }
   
   // Show compose view and hide other views
   document.querySelector('#emails-view').style.display = 'none';
@@ -203,7 +210,7 @@ function reply_email(email_id, email_sender ,email_subject, email_body){
   document.querySelector('#compose-view').style.display = 'block';
 
   document.querySelector('#compose-recipients').setAttribute('value', email_sender); 
-  document.querySelector('#compose-subject').setAttribute('value', email_subject) ;
+  document.querySelector('#compose-subject').setAttribute('value', email_subject_re) ;
   document.querySelector('#compose-body').innerHTML = email_body;
 
   
